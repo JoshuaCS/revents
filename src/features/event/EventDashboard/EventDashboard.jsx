@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Grid, Button } from 'semantic-ui-react';
 import EventList from '../EventList/EventList';
 import EventForm from '../../EventForm/EventForm';
+import cuid from 'cuid';
 
 const eventsFromDashboard = [
   {
@@ -19,14 +20,14 @@ const eventsFromDashboard = [
       {
         id: 'a',
         name: 'Bob',
-        photoURL: 'https://randomuser.me/api/portraits/men/20.jpg'
+        photoURL: 'https://randomuser.me/api/portraits/men/20.jpg',
       },
       {
         id: 'b',
         name: 'Tom',
-        photoURL: 'https://randomuser.me/api/portraits/men/22.jpg'
-      }
-    ]
+        photoURL: 'https://randomuser.me/api/portraits/men/22.jpg',
+      },
+    ],
   },
   {
     id: '2',
@@ -43,44 +44,61 @@ const eventsFromDashboard = [
       {
         id: 'b',
         name: 'Tom',
-        photoURL: 'https://randomuser.me/api/portraits/men/22.jpg'
+        photoURL: 'https://randomuser.me/api/portraits/men/22.jpg',
       },
       {
         id: 'a',
         name: 'Bob',
-        photoURL: 'https://randomuser.me/api/portraits/men/20.jpg'
-      }
-    ]
-  }
-]
-
+        photoURL: 'https://randomuser.me/api/portraits/men/20.jpg',
+      },
+    ],
+  },
+];
 
 class EventDashboard extends Component {
   state = {
     events: eventsFromDashboard,
-    isOpen: false
-  }
+    isOpen: false,
+  };
 
   handleFormOpen = () => {
-        this.setState(({isOpen}) => ({
-      isOpen: !isOpen
-    }))
+    this.setState(({ isOpen }) => ({
+      isOpen: !isOpen,
+    }));
+  };
+
+  handleCreateEvent = (newEvent) => {
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = '/assets/user.png';
+    this.setState({
+      events: [...this.state.events, newEvent],
+      isOpen: false
+    })
   }
-    render() {
-      const {events, isOpen} = this.state;
-        return (
-            <Grid>
-                <Grid.Column width={10}>
-                    <EventList events={eventsFromDashboard} />
-                </Grid.Column>
-                <Grid.Column width={6}>
-                    <Button onClick={this.handleFormOpen} positive content='Create Event' />
-                    {isOpen && <EventForm handleFormCancel={this.handleFormOpen} />}
-                 
-                </Grid.Column>
-            </Grid>
-        )
-    }
+
+  render() {
+    const { events, isOpen } = this.state;
+    return (
+      <Grid>
+        <Grid.Column width={10}>
+          <EventList events={eventsFromDashboard} />
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <Button
+            onClick={this.handleFormOpen}
+            positive
+            content="Create Event"
+          />
+          {isOpen && (
+            <EventForm
+              handleFormCancel={this.handleFormOpen}
+              createEvent={this.handleCreateEvent}
+            />
+          )}
+        </Grid.Column>
+      </Grid>
+    );
+  }
 }
 
 export default EventDashboard;
