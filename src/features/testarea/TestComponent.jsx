@@ -5,7 +5,7 @@ import { Button } from 'semantic-ui-react';
 
 const mapState = (state) => ({
     data: state.test.data
-})
+});
 
 const actions = {
     incrementCounter,
