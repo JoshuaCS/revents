@@ -13,6 +13,7 @@ const rrfConfig = {
   userProfile: 'users',
   attachAuthIsReady: true,
   useFireStoreForProfile: true,
+  updateProfileOnLogin: false,
 };
 
 export const configureStore = () => {

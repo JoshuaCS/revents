@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Item, Icon, Button, Segment, List } from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee';
 import { Link } from 'react-router-dom';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 
 class EventListItem extends Component {
   render() {
