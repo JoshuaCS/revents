@@ -85,9 +85,8 @@ export const updatePassword = (creds) => async (
   try {
     await user.updatePassword(creds.newPassword1);
     await dispatch(reset('account'));
-    toastr.success('Success', 'Your Password has been updated');
+    toastr.success('Success', 'Your password has been updated');
   } catch (error) {
-    console.log(error);
     throw new SubmissionError({
       _error: error.message,
     });
